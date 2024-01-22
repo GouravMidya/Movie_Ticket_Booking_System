@@ -1,35 +1,9 @@
-class User{
-    String name,username,password,address,phone;
-
-    void buyTicket(){
-
-    }
-    void showTicket(){
-    
-    }
-
-    void cancelTicket(){
-
-    }
-
-    void logout(){
-
-    }
-}
-
-class Admin extends User{
-    void addMovies(){
-
-    }
-
-    void selectMovies(){
-        
-    }
-}
-
-
 public class MovieTicketDriver {
     public static void main(String[] args) {
-        
+        //Movie m = new Movie("Race 3","Action",4.9,120,"Its a good movie of racing");
+        //m.insertMovie();
+
+        Movie m = new Movie();
+        m.showMovies();
     }
 }
