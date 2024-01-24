@@ -2,33 +2,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Movie {
-    //instance fields
-    private String title;
-    private String genre;
-    private double rating;
-    private int duration;
-    private String synopsis;
-
     private DatabaseOperation db = new DatabaseOperation();
 
-    //Contructors
-    public Movie(){
-        
-    }
-
-    public Movie(String title, String genre, double rating, int duration, String synopsis){
-        this.title = title;
-        this.genre = genre;
-        this.rating = rating;
-        this.duration = duration;
-        this.synopsis = synopsis;
-    }
     
 
     // Methods
 
     // Method to insert movie into database
-    public void insertMovie(){
+    public void insertMovie(String title, String genre, double rating, int duration, String synopsis){
         String sql = "INSERT INTO movies (title, genre, rating, duration, synopsis) VALUES (?,?,?,?,?)";
         Object[] values = {title, genre, rating, duration, synopsis};
         int rowsAffected = db.executeUpdate(sql, values);

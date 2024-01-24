@@ -23,6 +23,9 @@ public class MovieTicketDriver {
 
         // Call the insertShowtime method
         //s.insertShowtime(1, 2, showtime);
-        s.showShowtimes();
+        //s.showShowtimes();
+
+        Admin a = new Admin();
+        a.adminMenu();
     }
 }
