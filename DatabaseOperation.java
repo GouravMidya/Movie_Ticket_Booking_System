@@ -53,6 +53,40 @@ public class DatabaseOperation {
         return records;
     }
 
+    public int getSeatingCapacity(String sql,int parameter){
+        int record = 0;
+        try(Connection conn = connectToDatabase();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, parameter);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                record = rs.getInt("SeatingCapacity");
+            }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        return record;
+    }
+
+
+    public ArrayList<Integer> getBookedSeats(int showtimeID){
+        String sql = "SELECT SelectedSeats from bookings where ShowtimeID = ?";
+        ArrayList<Integer> bookedSeats = new ArrayList<>();
+
+        try(Connection conn = connectToDatabase();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, showtimeID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bookedSeats.add(rs.getInt("SelectedSeats"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return bookedSeats;
+    }
+
 
 
 

@@ -26,4 +26,9 @@ public class Showtime {
             System.out.println("-----------------------------"); 
         }
     }
+    public int getTheaterCapacity(int showtime){
+        String sql = "SELECT SeatingCapacity from theaters where TheaterID = (SELECT TheaterID from showtimes where ShowtimeID = ?)";
+        return db.getSeatingCapacity(sql, showtime);
+    }
+
 }

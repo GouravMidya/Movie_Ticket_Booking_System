@@ -26,6 +26,9 @@ public class MovieTicketDriver {
         //s.showShowtimes();
 
         Admin a = new Admin();
-        a.adminMenu();
+        //a.adminMenu();
+
+        Booking b = new Booking();
+        b.bookTicket(1);
     }
 }
