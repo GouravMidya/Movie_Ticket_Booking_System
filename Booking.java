@@ -51,10 +51,24 @@ public class Booking {
     }
 
     public void seeTicket(int userID){
-
+        System.out.println("Tickets Booked at different showtimes:");
+        db.getAllBookingsForUser(userID);
+        System.out.print("Enter ShowtimeID to know information: ");
+        int showtimeID_choice = sc.nextInt();
+        s.showShowtimesDetails(showtimeID_choice);
     }
 
     public void cancelTicket(int userID){
+        System.out.println("Tickets Booked at different showtimes:");
+        db.getAllBookingsForUser(userID);
+        System.out.print("Enter BookingID to cancel Booking: ");
 
+        //saving the bookings details 
+        int bookingID_choice = sc.nextInt();
+        int rowsAffected = db.removeBooking(bookingID_choice);
+        if(rowsAffected>0)
+            System.out.println("Booking cancelled successfully");
+        else
+            System.out.println("Something went wrong.Booking not cancelled.");
     }
 }

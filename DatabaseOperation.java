@@ -87,7 +87,72 @@ public class DatabaseOperation {
         return bookedSeats;
     }
 
+    public ArrayList<Integer> getShowtimeDetailsForUser(int userID,int showtimeID){
+        String sql = "SELECT SelectedSeats from bookings where ShowtimeID = ?";
+        ArrayList<Integer> bookedSeats = new ArrayList<>();
 
+        try(Connection conn = connectToDatabase();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, showtimeID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bookedSeats.add(rs.getInt("SelectedSeats"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return bookedSeats;
+    }
+
+    public void getAllBookingsForUser(int userID){
+        String sql = "SELECT * from bookings where userid =?";
+        try(Connection conn = connectToDatabase();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                System.out.println("----- Booking Details -----");
+                System.out.println("Booking ID: "+rs.getInt("BookingID"));
+                System.out.println("Showtime ID: "+rs.getInt("ShowtimeID"));
+                System.out.println("Seat number: "+rs.getInt("SelectedSeats"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void getShowtimeDetails(String sql,int showtimeID){
+        try(Connection conn = connectToDatabase();
+        PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, showtimeID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int showtimeID_sql = rs.getInt("ShowtimeID");
+                String title = rs.getString("Title");
+                int duration = rs.getInt("Duration");
+                Time showtime = rs.getTime("Showtime");
+                System.out.println("ShowtimeID: " + showtimeID_sql + ", Title: " + title + ", Duration: " + duration + ", Showtime: " + showtime);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public int removeBooking(int bookingID){
+        //enter any booking id and works
+        //future scope : to verify if booking is users or not
+        String sql = "DELETE from bookings where BookingID =?";
+        int rowsAffected = 0;
+        try(Connection conn = connectToDatabase();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, bookingID);
+            rowsAffected = ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rowsAffected;
+    }
 
 
 }

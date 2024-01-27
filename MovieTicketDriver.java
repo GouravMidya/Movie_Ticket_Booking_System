@@ -29,6 +29,8 @@ public class MovieTicketDriver {
         //a.adminMenu();
 
         Booking b = new Booking();
-        b.bookTicket(1);
+        //b.bookTicket(1);
+        //b.seeTicket(1);
+        b.cancelTicket(1);
     }
 }

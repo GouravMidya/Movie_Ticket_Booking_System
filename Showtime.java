@@ -26,6 +26,11 @@ public class Showtime {
             System.out.println("-----------------------------"); 
         }
     }
+
+    public void showShowtimesDetails(int showtimeID){
+        String sql = "SELECT s.ShowtimeID, m.Title,m.Duration,s.Showtime from Showtimes s, Movies m where s.MovieID = m.MovieID and s.ShowtimeID = ? ";
+        db.getShowtimeDetails(sql, showtimeID);
+    }
     public int getTheaterCapacity(int showtime){
         String sql = "SELECT SeatingCapacity from theaters where TheaterID = (SELECT TheaterID from showtimes where ShowtimeID = ?)";
         return db.getSeatingCapacity(sql, showtime);
