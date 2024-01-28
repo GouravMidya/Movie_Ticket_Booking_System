@@ -5,6 +5,8 @@ public class Booking {
     Showtime s = new Showtime();
     DatabaseOperation db = new DatabaseOperation();
     Scanner sc = new Scanner(System.in);
+
+    
     public void bookTicket(int userID){
         // display the list of showtime to user
         System.out.println("Avaialbe showtimes:");

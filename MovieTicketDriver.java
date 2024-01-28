@@ -1,36 +1,126 @@
-import java.time.*;
-import java.sql.*;
+import java.util.*;
 
 public class MovieTicketDriver {
+    static Scanner sc = new Scanner(System.in);
+
+    static DatabaseOperation db = new DatabaseOperation();
+    //methods to sign up and login for user class
+    static void user_signup(){
+        System.out.println("Enter your username: ");
+        String username = sc.next();
+        
+        System.out.println("Enter your password: ");
+        String password = sc.next();
+        
+        System.out.println("Enter your name: ");
+        String name = sc.next();
+        
+        System.out.println("Enter your phone number: ");
+        String phone = sc.next();
+        
+        System.out.println("Enter your address: ");
+        String address = sc.nextLine();
+        address = sc.nextLine();
+
+        String sql = "INSERT INTO users(Username,Password,Name,Phone,Address) values(?,?,?,?,?)";
+        Object[] values = {username,password,name,phone,address};
+        int rowsAffected = db.executeUpdate(sql, values); 
+        if(rowsAffected>0)
+            System.out.println("User registered successfully");
+        else
+            System.out.println("Something went wrong.Sign up failed.");
+    }
+
+    static void user_login(){
+        System.out.println("Enter your username: ");
+        String username = sc.next();
+        
+        System.out.println("Enter your password: ");
+        String password = sc.next();
+
+        String sql = "SELECT Password from users where username = ?";
+        String pass_real = db.validatePass(sql, username);
+
+        if (password.equals(pass_real)){
+            System.out.println("Login Succesfull!");
+           User u = new User();
+           sql = "SELECT UserID from users where username = ?";
+           int userID = db.fetchUserID(sql, username);
+           u.userMenu(userID);
+        }else{
+            System.out.println("Invalid password! Try again!");
+        }
+    }
+
+    //methods to sign up and login for admin class
+    static void admin_signup(){
+        System.out.println("Enter your username: ");
+        String username = sc.next();
+        
+        System.out.println("Enter your password: ");
+        String password = sc.next();
+
+        String sql = "INSERT INTO admin(Username,Password) values(?,?)";
+        Object[] values = {username,password};
+        int rowsAffected = db.executeUpdate(sql, values); 
+        if(rowsAffected>0)
+            System.out.println("Admin registered successfully");
+        else
+            System.out.println("Something went wrong.Sign up failed.");
+    }
+
+    static void admin_login(){
+        System.out.println("Enter your username: ");
+        String username = sc.next();
+        
+        System.out.println("Enter your password: ");
+        String password = sc.next();
+
+        String sql = "SELECT Password from admin where username = ?";
+        String pass_real = db.validatePass(sql, username);
+
+        if (password.equals(pass_real)){
+            System.out.println("Login Succesfull!");
+            Admin a = new Admin();
+            a.adminMenu();
+        }else{
+            System.out.println("Invalid password! Try again!");
+        }
+    }
+
+
+
+    //the main page where user gets option to do so
     public static void main(String[] args) {
-        //Movie m = new Movie("Race 3","Action",4.9,120,"Its a good movie of racing");
-        //m.insertMovie();
+        Scanner sc2 = new Scanner(System.in);
 
-        //Movie m = new Movie();
-        //m.showMovies();
-
-        //Theater t = new Theater();
-        //t.insertTheater("IMAX",40);
-        //t.showTheaters();
-
-        Showtime s = new Showtime();
-        // Create a LocalDateTime object for today at 4 PM
-        LocalDateTime localDateTime = LocalDateTime.now().withHour(16).withMinute(0).withSecond(0);
-
-        // Convert the LocalDateTime to a Timestamp
-        Timestamp showtime = Timestamp.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-
-
-        // Call the insertShowtime method
-        //s.insertShowtime(1, 2, showtime);
-        //s.showShowtimes();
-
-        Admin a = new Admin();
-        //a.adminMenu();
-
-        Booking b = new Booking();
-        //b.bookTicket(1);
-        //b.seeTicket(1);
-        b.cancelTicket(1);
+        int choice;
+        System.out.println("----- Movie Ticket Booking System -----");
+        System.out.println("Press 1 to sign up as user.");
+        System.out.println("Press 2 to login as user.");
+        System.out.println("Press 3 to sign up as admin.");
+        System.out.println("Press 4 to login as admin.");
+        System.out.println("----- --------------------------- -----");
+        System.out.print("Enter your choice:");
+        choice = sc2.nextInt();
+        switch(choice){
+            case 1:
+                //user signup
+                user_signup();
+                break;
+            case 2: 
+                //user login
+                user_login();
+                break;
+            case 3:
+                //admin signup
+                admin_signup();
+                break;
+            case 4:
+                //admin login
+                admin_login();
+                break;
+        }
+        sc2.close();
     }
 }

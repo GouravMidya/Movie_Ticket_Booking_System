@@ -6,7 +6,7 @@ import java.time.ZoneId;
 public class Admin extends User{
     //instance fields
     Scanner sc = new Scanner(System.in);
-    int choice;
+    int choice,userID;
     String title, genre,synopsis;
     double rating;
     int duration,movieid,theaterid,showmtime_hour,showtime_min;
@@ -16,6 +16,11 @@ public class Admin extends User{
     Movie m = new Movie();
     Theater t = new Theater();
     Showtime st = new Showtime();
+
+    public int takeUserID(){
+        System.out.println("Enter user id: ");
+        return sc.nextInt();
+    }
 
     public void adminMenu(){
         while(true){
@@ -87,15 +92,19 @@ public class Admin extends User{
                     break;
                 case 7:
                 //book a ticket
-
+                    userID = takeUserID();
+                    b.bookTicket(userID);
                     break;
+
                 case 8:
                 //see ticket bookings
-
+                    userID = takeUserID();
+                    b.seeTicket(userID);
                     break;
                 case 9:
                 //cancel ticket booking
-
+                    userID = takeUserID();
+                    b.cancelTicket(userID);
                     break;
                 case 10:
                 //terminate the program

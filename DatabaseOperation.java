@@ -154,5 +154,36 @@ public class DatabaseOperation {
         return rowsAffected;
     }
 
+    public String validatePass(String sql,String username){
+        String pass = "";
+        try(Connection conn = connectToDatabase();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                pass = rs.getString("password");
+            }
 
+        }catch (SQLException e){
+                e.printStackTrace();
+        }
+        return pass;
+    }
+
+    public int fetchUserID(String sql , String username){
+        int userID = 0;
+        try(Connection conn = connectToDatabase();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                userID = rs.getInt("UserID");
+            }
+
+        }catch (SQLException e){
+                e.printStackTrace();
+        }
+
+        return userID;
+    }
 }
